@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+	xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation = "http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<!-- Declaring a bean with Property Initialization as well -->
+	<bean id="shape" class="com.rohit.learn.Triangle">
+		<!-- Setter Injection -->
+		<!-- <property name="type" value="Equilateral"></property> -->
+		
+		<!-- Constructor Injection -->
+		<constructor-arg value="Isosceles"></constructor-arg>
+		<constructor-arg value="10"></constructor-arg>
+		
+		<!-- type property used to resolve runtime conflict i.e which constructor needs to run -->
+		<!-- <constructor-arg type="java.lang.String" value="10"></constructor-arg> -->
+	</bean>
+	
+	<!-- Object Injection -->
+	<bean id="square" class="com.rohit.learn.Square">
+		<!-- Injection using Reference Beans -->
+		<property name="pointA" ref="origin"></property>
+		<property name="pointB" ref="point2"></property>
+		
+		<!-- Injection using Inner Beans -->
+		<property name="pointC">
+			<!-- No need to specify "id" because we won't be referencing it or calling it anywhere else-->
+			<bean class="com.rohit.learn.Point">
+				<property name="x" value="0"></property>
+				<property name="y" value="20"></property>
+			</bean>
+		</property>
+		<property name="pointD">
+			<bean class="com.rohit.learn.Point">
+				<property name="x" value="20"></property>
+				<property name="y" value="20"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="origin" class="com.rohit.learn.Point">
+		<property name="x" value="0"></property>
+		<property name="y" value="0"></property>
+	</bean>
+	
+	<bean id="point2" class="com.rohit.learn.Point">
+		<property name="x" value="20"></property>
+		<property name="y" value="0"></property>
+	</bean>
+	
+	<!-- Aliases can also be used if needed -->
+	<alias name="square" alias="rectangle"/>
+
+</beans>
